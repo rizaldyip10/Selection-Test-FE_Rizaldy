@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, Flex, Input, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
+import { Avatar, Badge, Box, Button, Flex, Input, Select, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
 import Axios from "axios"
 import { useEffect, useState } from "react"
 import { BiTrash } from "react-icons/bi"
@@ -9,12 +9,14 @@ export const EmployeeTable = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [sort, setSort] = useState("ASC")
+    const [sortBy, setSortBy] = useState("firstName")
     const token = localStorage.getItem("token");
   
-    const getData = async (page, search) => {
+    const getData = async (page, search, sort, sortBy) => {
       try {
         const response = await Axios.get(
-          `http://localhost:9000/api/user/?page=${page}&limit=10&search=${search}`,
+          `http://localhost:9000/api/user/?page=${page}&limit=10&search=${search}&sort=${sort}&sortBy=${sortBy}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -27,29 +29,48 @@ export const EmployeeTable = () => {
         console.log(error);
       }
     };
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+        setCurrentPage(1);
+    };
+    
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const handleSortChange = (e) => {
+        setSort(e.target.value)
+        setCurrentPage(1)
+    }
+
+    const handleSortByChange = (e) => {
+        setSortBy(e.target.value)
+        setCurrentPage(1)
+    }
   
     useEffect(() => {
-      getData(currentPage, searchQuery);
-    }, [currentPage, searchQuery]);
-  
-    const handleSearchChange = (e) => {
-      setSearchQuery(e.target.value);
-      setCurrentPage(1);
-    };
-  
-    const handlePageChange = (page) => {
-      setCurrentPage(page);
-    };
+      getData(currentPage, searchQuery, sort, sortBy);
+    }, [currentPage, searchQuery, sort, sortBy]);
   
     return (
       <>
-        <Box mb="20px">
+        <Flex mb="20px">
           <Input
             placeholder="Search employee..."
             value={searchQuery}
             onChange={handleSearchChange}
           />
-        </Box>
+          <Select placeholder="Sort By" value={sortBy} onChange={handleSortByChange}>
+            <option value="firstName">Name</option>
+            <option value="firstName">Join Date</option>
+            <option value="firstName">Birthdate</option>
+          </Select>
+          <Select placeholder="Sort" value={sort} onChange={handleSortChange}>
+            <option>ASC</option>
+            <option>DESC</option>
+          </Select>
+        </Flex>
         <TableContainer>
           <Table size={{ base: "sm", lg: "md" }}>
             <Thead>

@@ -144,7 +144,7 @@ export const LogCard = () => {
                 <Divider mt="10px" color="blue" />
                 <Flex mt="10px" alignItems="center" direction="column">
                     <Text>Your Schedule Time Today</Text>
-                    <Text fontWeight="bold">09:00 - 16:00</Text>
+                    <Text fontWeight="bold">09:00 - 18:00</Text>
                     <Formik validationSchema={noteSchema} initialValues={initialValues}
                     onSubmit={(value, action) => {
                         clockIn(value)

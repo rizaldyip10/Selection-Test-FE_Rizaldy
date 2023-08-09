@@ -6,7 +6,6 @@ import { useEffect, useState } from "react"
 export const TodayLog = () => {
     const [log, setLog] = useState()
     const token = localStorage.getItem("token")
-    console.log(log);
 
     const getLog = async () => {
         try {

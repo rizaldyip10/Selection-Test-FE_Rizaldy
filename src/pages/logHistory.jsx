@@ -2,6 +2,7 @@ import { Flex, Heading } from "@chakra-ui/react"
 import Axios from "axios"
 import { useEffect, useState } from "react"
 import { LogTable } from "../components/employee/logTable"
+import { Navigate } from "react-router-dom"
 
 
 export const LogHistory = () => {
@@ -20,21 +21,20 @@ export const LogHistory = () => {
             console.log(error);
         }
     }
-    console.log(data);
 
     useEffect(() => {
         logHistory()
     }, [])
-    return (
+    return token ? (
         <Flex direction="column" ml={{base: "15px", md: "120px", lg: "220px"}} 
         p={{base: "10px", md: "20px"}} w={{base: "90vw", md: "83vw"}} mb={{ base: "60px", md: "0px"}}>
             <Heading fontSize="26px">My Attendances Log</Heading>
             <Flex alignItems="center" justifyContent="space-between" mt="30px">
                 
             </Flex>
-            <Flex justifyContent="center">
+            <Flex direction="column">
                 <LogTable data={data}/>
             </Flex>
         </Flex>
-    )
+    ) : (<Navigate to="/login" />)
 }

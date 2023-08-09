@@ -26,9 +26,7 @@ export const LoginCard = () => {
 
     const handleSubmit = async (data) => {
         try {
-            // const { email, password } = data
             const response = await Axios.post("http://localhost:9000/api/auth/login", data)
-            console.log(response.data.result);
             dispatch(setValue(response.data.result))
             localStorage.setItem("token", response.data.token)
             toast({

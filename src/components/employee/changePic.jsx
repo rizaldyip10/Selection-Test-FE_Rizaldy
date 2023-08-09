@@ -20,7 +20,7 @@ export const ChangePic = ({ image }) => {
         try {
             const formData = new FormData();
             formData.append("file", file); // Use data.file here
-            const response = await Axios.patch(
+            await Axios.patch(
                 "http://localhost:9000/api/user/picture",
                 formData,
                 {
@@ -29,7 +29,6 @@ export const ChangePic = ({ image }) => {
                     },
                 }
             );
-            console.log(response);
             toast({
                 title: "Success",
                 description: "Profile Picture Updated!",

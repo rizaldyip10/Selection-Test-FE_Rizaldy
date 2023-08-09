@@ -3,6 +3,7 @@ import { MonthlySalary } from "../components/employee/monthlySalary"
 import { useEffect, useState } from "react"
 import Axios from "axios"
 import { YearlySalary } from "../components/employee/yearlySalary"
+import { Navigate } from "react-router-dom"
 
 
 export const SalaryPage = () => {
@@ -16,7 +17,6 @@ export const SalaryPage = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            console.log(response)
             setSalary(response.data)
         } catch (error) {
             console.log(error);
@@ -26,7 +26,7 @@ export const SalaryPage = () => {
     useEffect(() => {
         getSalary()
     },[])
-    return (
+    return token ? (
         <Flex direction="column" ml={{base: "15px", md: "120px", lg: "220px"}}
         p={{base: "10px", md: "20px"}} w={{base: "90vw", md: "83vw"}} mb={{ base: "60px", md: "0px"}}>
             <Heading fontSize="26px">My Salary Recap</Heading>
@@ -45,5 +45,5 @@ export const SalaryPage = () => {
                 </TabPanels>
             </Tabs>
         </Flex>
-    )
+    ) : (<Navigate to="/login" />)
 }

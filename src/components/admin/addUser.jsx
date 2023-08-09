@@ -15,11 +15,10 @@ export const AddUser = () => {
 
     const handleEmail = async (data) => {
         try {
-            const response = await Axios.post("http://localhost:9000/api/auth/user", data, {
+            await Axios.post("http://localhost:9000/api/auth/user", data, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }})
-            console.log(response);
             toast({
                 title: "Success!",
                 description: "Email successfuly sent!",
@@ -56,7 +55,7 @@ export const AddUser = () => {
     
     const initialValues = {
         email: "",
-        posId: ""
+        posId: 1
     }
     
     useEffect(() => {
@@ -80,8 +79,8 @@ export const AddUser = () => {
             <ModalBody pb={6}>
             <Formik initialValues={initialValues} validationSchema={emailSchema}
             onSubmit={(value, action) => {
-                handleEmail(value)
-                action.resetForm()
+              handleEmail(value)
+              action.resetForm()
             }}>
                 {(props) => {
                     return (
@@ -89,7 +88,7 @@ export const AddUser = () => {
                             <InputField label="Email" name="email" id="email" className="email" mb="10px" />
                             <SelectField label="Position" name="posId" id="posId" className="posId">
                               {position?.map(item => (
-                                <option value={item.id}>{item.position}</option>
+                                <option key={item.id} value={item.id}>{item.position}</option>
                               ))}
                             </SelectField>
                             <Button mt="10px" type="submit">Send</Button>

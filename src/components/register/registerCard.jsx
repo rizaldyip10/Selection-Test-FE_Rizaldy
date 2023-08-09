@@ -46,12 +46,11 @@ export const RegisCard = () => {
 
     const handleSubmit = async (data) => {
         try {
-            const response = await Axios.post("http://localhost:9000/api/auth", data, {
+            await Axios.post("http://localhost:9000/api/auth", data, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
-            console.log(response.data.result);
             toast({
                 title: "Login Success!",
                 description: "You have successfully logged in!",

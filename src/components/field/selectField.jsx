@@ -7,7 +7,7 @@ export const SelectField = ({label, ...props}) => {
     return (
         <FormControl isInvalid={meta.error && meta.touched}>
             <FormLabel>{label}</FormLabel>
-            <Select {...field} {...field} {...props}>
+            <Select {...field} {...props} w={{ base: "100%", md: "auto" }}>
                 {props.children}
             </Select>
             <FormErrorMessage>{meta.error}</FormErrorMessage>

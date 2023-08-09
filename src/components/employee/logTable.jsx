@@ -2,7 +2,7 @@ import { Flex, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-u
 
 export const LogTable = ({ data }) => {
     return (
-        <Flex w={{ base: "300px", md: "590px", lg: "1000px" }} mt="20px">
+        <>
             <TableContainer>
                 <Table w="1000px" size={{ base: "sm", md: "md", lg: "lg" }}>
                     <Thead>
@@ -16,10 +16,10 @@ export const LogTable = ({ data }) => {
                     </Thead>
                     <Tbody>
                         {data?.map(item => {
-                            const clockIn = new Date(item.clockIn);
-                            const clockOut = new Date(item.clockOut);
-                            const clockInOT = new Date(item.clockInOT);
-                            const clockOutOT = new Date(item.clockOutOT);
+                            const clockIn = new Date(new Date(item.clockIn) - (7 * 3600 * 1000))
+                            const clockOut = new Date(new Date(item.clockOut) - (7 * 3600 * 1000))
+                            const clockInOT = new Date(new Date(item.clockInOT) - (7 * 3600 * 1000))
+                            const clockOutOT = new Date(new Date(item.clockOutOT) - (7 * 3600 * 1000))
 
                             const overtimeHours = Math.floor((clockOutOT - clockInOT) / (60 * 60 * 1000))
 
@@ -42,6 +42,6 @@ export const LogTable = ({ data }) => {
                     </Tbody>
                 </Table>
             </TableContainer>
-        </Flex>
+        </>
     );
 };
